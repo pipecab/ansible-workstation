@@ -27,3 +27,10 @@
     dconf:
       key: "/org/gnome/desktop/background/picture-uri"
       value: "'zoom'"
+
+  - name: copy .bashrc file
+    copy:
+      src: files/bashrc
+      dest: /home/felipec/.bashrc
+      owner: felipec
+      group: felipec
