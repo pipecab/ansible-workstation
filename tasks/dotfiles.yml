@@ -1,0 +1,8 @@
+- name: copy personal configuration files
+    copy:
+      src: files/{{ item.src }}
+      dest: /home/felipe/{{ item.dest }}
+      owner: felipe
+      group: felipe
+    with_items:
+      - { src: '', dest: '' }

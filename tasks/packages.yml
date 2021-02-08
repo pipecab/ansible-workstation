@@ -1,0 +1,71 @@
+- name: Add an Apt signing key, uses whichever key is at the URL
+  ansible.builtin.apt_key:
+    url: https://repo.anaconda.com/pkgs/misc/gpgkeys/anaconda.asc
+    state: present
+
+- name: Add an Apt signing key to a specific keyring file
+  ansible.builtin.apt_key:
+    url: https://repo.anaconda.com/pkgs/misc/gpgkeys/anaconda.asc
+    keyring: /etc/apt/trusted.gpg.d/conda.gpg
+
+- name: Add specified repository into sources list
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://repo.anaconda.com/pkgs/misc/debrepo/conda stable main
+    state: present
+
+- name: system setup | repositories | add sources.list for conda host
+  tags: non-free,repositories
+  copy:
+    src: deb [arch=amd64] https://repo.anaconda.com/pkgs/misc/debrepo/conda stable main
+    dest: /etc/apt/sources.list.d/conda.list
+    backup: yes
+
+- name: system setup | repositories | add sources.list for debian hosts
+  tags: non-free,repositories
+  copy:
+    src: distribution_packages/debian_sources.list
+    dest: /etc/apt/sources.list
+    backup: yes
+
+- name: install packages
+  apt:
+    name: 
+      - htop
+      - tmux
+      - neovim
+      - curl
+      - git
+      - make
+      - build-essential
+      - cmake
+      - python
+      - python3
+      - libgl1-mesa-glx
+      - libegl1-mesa
+      - libxrandr2
+      - libxrandr2
+      - libxss1
+      - libxcursor1
+      - libxcomposite1
+      - libasound2
+      - libxi6
+      - libxtst6
+      - conda
+      - i3
+      - firefox
+      - i3-wm
+      - dunst
+      - i3lock
+      - i3status
+      - suckless-tools
+      - compton
+      - hsetroot
+      - rxvt-unicode
+      - xsel
+      - rofi
+      - fonts-noto
+      - fonts-mplus
+      - xsettingsd
+      - lxappearance
+      - scrot
+      - viewnior

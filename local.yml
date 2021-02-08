@@ -1,36 +1,16 @@
----
 - hosts: localhost
   connection: local
   become: true
 
+  pre_tasks:
+    - name: update repositories
+      apt:
+        update_cache: yes
+      change_when: False
+  
   tasks:
-  - name: install packages
-    package:
-      name: 
-        - htop
-        - tmux
-        - vim-nox
-
-  - name: copy wallpaper file
-    copy:
-      src: file/wallpaper.png
-      dest: /usr/share/backgrounds/ansible-wallpaper.png
-      owner: root
-      group: root
-
-  - name: set wallpaper
-    dconf:
-      key: "/org/gnome/desktop/background/picture-uri"
-      value: "'file:///usr/share/backgrounds/ansible-wallpaper.png'"
-
-  - name: set wallpaper posititon
-    dconf:
-      key: "/org/gnome/desktop/background/picture-uri"
-      value: "'zoom'"
-
-  - name: copy .bashrc file
-    copy:
-      src: files/bashrc
-      dest: /home/felipec/.bashrc
-      owner: felipec
-      group: felipec
+    - include: tasks/packages.yml
+    - include: tasks/dotfiles.yml
+    - include: tasks/user.yml
+    - include: tasks/cron.yml
+    - include: tasks/wallpaper-set.yml
